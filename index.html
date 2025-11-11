@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FEX Cross Swap</title>
+    <script src="https://plugin.jup.ag/plugin-v1.js"></script>
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
+      :root {
+        --jupiter-plugin-primary: 199, 242, 132;
+        --jupiter-plugin-background: 0, 0, 0;
+        --jupiter-plugin-primary-text: 232, 249, 255;
+        --jupiter-plugin-warning: 251, 191, 36;
+        --jupiter-plugin-interactive: 33, 42, 54;
+        --jupiter-plugin-module: 16, 23, 31;
+      }
+      #wrapper {
+        width: 400px;
+        height: 568px;
+        margin: 40px auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+      #target-container {
+        width: 400px;
+        height: 568px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>FEX Cross Swap</h1>
+    <div id="wrapper">
+      <div id="target-container"></div>
+    </div>
+
+    <script>
+      window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "target-container",
+        branding: {
+          logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
+          name: "FEX Cross Swap",
+        },
+      });
+    </script>
+  </body>
+</html>
