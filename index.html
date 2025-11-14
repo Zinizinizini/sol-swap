@@ -1,100 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FEX Cross Swap Dashboard</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
-<script src="https://www.jup.ag/static/js/jupiter-plugin.js"></script>
-<style>
-  body { background-color: #0f0f0f; color: #fff; }
-  .card { background-color: #1a1a1a; border-radius: 12px; padding: 20px; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-  .btn { background-color: #4f46e5; color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-  .btn:hover { background-color: #6366f1; }
-  input { background-color: #111; color: #fff; border: 1px solid #444; border-radius: 8px; padding: 8px; width: 100%; }
-  #swap-container { width: 100%; height: 600px; margin-top: 20px; border: 2px solid #444; border-radius: 12px; background-color: #111; }
-</style>
-</head>
-<body class="p-6 font-sans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FEX Cross Swap</title>
 
-<h1 class="text-3xl font-bold mb-6 text-center">FEX Cross Swap Dashboard</h1>
+    <!-- Jupiter Plugin -->
+    <script src="https://plugin.jup.ag/plugin-v1.js"></script>
 
-<!-- Plans -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-  <div class="card">
-    <h2 class="text-xl font-semibold mb-2">Lite</h2>
-    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://lite-api.jup.ag" class="text-indigo-400 hover:underline">https://lite-api.jup.ag</a></p>
-    <p class="mb-1"><strong>Rate Limit:</strong> Fixed: 1 RPS</p>
-    <p class="mb-1"><strong>Price:</strong> Free</p>
-    <p class="text-green-400 font-semibold">Active</p>
-  </div>
+    <style>
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
 
-  <div class="card">
-    <h2 class="text-xl font-semibold mb-2">Ultra (Beta)</h2>
-    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://api.jup.ag/ultra" class="text-indigo-400 hover:underline">https://api.jup.ag/ultra</a></p>
-    <p class="mb-1"><strong>Rate Limit:</strong> Dynamic: Scales with executed swap volume</p>
-    <p class="mb-1"><strong>Price:</strong> Free</p>
-    <p class="text-green-400 font-semibold">Active</p>
-  </div>
+      /* Jupiter Plugin Colors */
+      :root {
+        --jupiter-plugin-primary: 0, 200, 0;        /* green buttons */
+        --jupiter-plugin-primary-text: 255, 255, 255; /* white button text */
+        --jupiter-plugin-background: 0, 0, 0;       /* black widget background */
+        --jupiter-plugin-warning: 251, 191, 36;     /* yellow warnings */
+        --jupiter-plugin-interactive: 33, 42, 54;   /* input highlights */
+        --jupiter-plugin-module: 16, 23, 31;        /* module container background */
+      }
 
-  <div class="card">
-    <h2 class="text-xl font-semibold mb-2">Pro</h2>
-    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://api.jup.ag" class="text-indigo-400 hover:underline">https://api.jup.ag</a></p>
-    <p class="mb-1"><strong>Rate Limit:</strong> Tiered: Starting at 10 RPS</p>
-    <p class="mb-1"><strong>Price:</strong> Starting at $200/mo</p>
-    <p class="text-red-500 font-semibold">Not Active</p>
-    <button class="btn mt-2">Subscribe Now</button>
-  </div>
-</div>
+      /* Centered container with fade overlay */
+      #wrapper {
+        width: 400px;
+        height: 400px;
+        margin: 40px auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+      }
 
-<!-- API Key Management -->
-<div class="card max-w-xl mx-auto mb-8">
-  <h2 class="text-xl font-semibold mb-4">API Keys</h2>
-  <p class="mb-2">Securely manage and generate API keys to power your integrations.</p>
-  <div class="mb-4">
-    <label class="block mb-1">Your Jupiter API Key:</label>
-    <input type="text" id="apiKey" value="5673cae8-f314-49a1-84f9-fbcaadc37079" readonly>
-  </div>
-  <button class="btn" onclick="copyKey()">Copy Key</button>
-</div>
+      #target-container {
+        width: 400px;
+        height: 400px;
+      }
 
-<!-- Jupiter Swap Widget -->
-<div class="card max-w-3xl mx-auto">
-  <h2 class="text-xl font-semibold mb-4">Swap Tokens</h2>
-  <div id="swap-container"></div>
-</div>
+      /* Gradient overlay at the bottom */
+      #wrapper::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%; /* adjust fade height */
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.85) 100%
+        );
+        pointer-events: none; /* allows clicks through */
+      }
 
-<script>
-  // Copy API key function
-  function copyKey() {
-    const keyInput = document.getElementById('apiKey');
-    keyInput.select();
-    keyInput.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(keyInput.value).then(() => {
-      alert('API Key copied to clipboard!');
-    });
-  }
+      h1 {
+        font-weight: 600;
+        color: #ffffff; /* header text color */
+      }
+    </style>
+  </head>
 
-  // Initialize Jupiter swap widget
-  window.addEventListener("load", function() {
-    if (window.Jupiter && typeof window.Jupiter.init === "function") {
+  <body>
+    <h1>FEX Cross Swap</h1>
+    <div id="wrapper">
+      <div id="target-container"></div>
+    </div>
+
+    <script>
       window.Jupiter.init({
         displayMode: "integrated",
-        integratedTargetId: "swap-container",
+        integratedTargetId: "target-container",
         branding: {
           logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
-          name: "FEX Cross Swap"
+          name: "FEX Cross Swap",
         },
-        formProps: {
-          referralAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
-          referralFee: 25
-        }
       });
-    } else {
-      console.error("Jupiter plugin failed to load or init() missing.");
-    }
-  });
-</script>
-
-</body>
+    </script>
+  </body>
 </html>
