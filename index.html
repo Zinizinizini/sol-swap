@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jupiter Plugin Demo</title>
-    <script src="https://plugin.jup.ag/plugin-v1.js" data-preload defer></script>
-    <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: #000;
-            color: #fff;
-            min-height: 100vh;
-        }
-        #jupiter-plugin {
-            width: 100%;
-            max-width: 500px;
-            height: 500px;
-            border: 1px solid #555;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF‑8">
+  <meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+  <title>FEX Cross Swap</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans‑serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    #wrapper {
+      width: 100%;
+      max-width: 600px;
+      height: 600px;
+      margin: 40px auto;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #444;
+      border‑radius: 12px;
+      background: #111;
+    }
+    #target‑container {
+      width: 100%;
+      height: 100%;
+    }
+    h1 {
+      font‑weight: 600;
+      margin‑bottom: 20px;
+    }
+  </style>
+  <script src="https://www.jup.ag/static/js/jupiter-plugin.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Jupiter Plugin Demo</h1>
-        <div id="jupiter-plugin"></div>
-    </div>
+  <h1>FEX Cross Swap</h1>
+  <div id="wrapper">
+    <div id="target‑container"></div>
+  </div>
 
-    <script>
-        window.onload = function() {
-            console.log("window.Jupiter:", window.Jupiter);
-            if (window.Jupiter && typeof window.Jupiter.init === "function") {
-                window.Jupiter.init({
-                    displayMode: "widget",            // uses widget mode
-                    integratedTargetId: "jupiter-plugin"
-                });
-            } else {
-                console.error("Jupiter plugin failed to load or init() missing.");
-            }
-        };
-    </script>
+  <script>
+    window.addEventListener("load", function() {
+      console.log("window.Jupiter:", window.Jupiter);
+      if (window.Jupiter && typeof window.Jupiter.init === "function") {
+        window.Jupiter.init({
+          displayMode: "integrated",           // embedded mode
+          integratedTargetId: "target‑container",
+          branding: {
+            logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
+            name: "FEX Cross Swap"
+          },
+          formProps: {
+            referralAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
+            referralFee: 25                     // based on docs: see “Adding Fees to plugin” :contentReference[oaicite:1]{index=1}
+          }
+        });
+      } else {
+        console.error("Jupiter plugin failed to load or init() missing.");
+      }
+    });
+  </script>
 </body>
 </html>
