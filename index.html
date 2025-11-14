@@ -6,7 +6,6 @@
     <title>FEX Cross Swap</title>
 
     <!-- Jupiter Plugin -->
-    <script src="https://plugin.jup.ag/plugin-v1.js"></script>
 
     <style>
       body {
@@ -20,12 +19,12 @@
 
       /* Jupiter Plugin Colors */
       :root {
-        --jupiter-plugin-primary: 0, 200, 0;        /* green buttons */
-        --jupiter-plugin-primary-text: 255, 255, 255; /* white button text */
-        --jupiter-plugin-background: 0, 0, 0;       /* black widget background */
-        --jupiter-plugin-warning: 251, 191, 36;     /* yellow warnings */
-        --jupiter-plugin-interactive: 33, 42, 54;   /* input highlights */
-        --jupiter-plugin-module: 16, 23, 31;        /* module container background */
+        --jupiter-plugin-primary: 0, 200, 0;
+        --jupiter-plugin-primary-text: 255, 255, 255;
+        --jupiter-plugin-background: 0, 0, 0;
+        --jupiter-plugin-warning: 251, 191, 36;
+        --jupiter-plugin-interactive: 33, 42, 54;
+        --jupiter-plugin-module: 16, 23, 31;
       }
 
       /* Centered container with fade overlay */
@@ -39,29 +38,28 @@
       }
 
       #target-container {
-        width: 400px;
-        height: 400px;
+        width: 100%;
+        height: 100%;
       }
 
-      /* Gradient overlay at the bottom */
       #wrapper::after {
         content: "";
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 50%; /* adjust fade height */
+        height: 50%;
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0%,
           rgba(0, 0, 0, 0.85) 100%
         );
-        pointer-events: none; /* allows clicks through */
+        pointer-events: none;
       }
 
       h1 {
         font-weight: 600;
-        color: #ffffff; /* header text color */
+        color: #ffffff;
       }
     </style>
   </head>
@@ -73,6 +71,7 @@
     </div>
 
     <script>
+      // Initialize Jupiter widget with SOL referral
       window.Jupiter.init({
         displayMode: "integrated",
         integratedTargetId: "target-container",
@@ -80,6 +79,10 @@
           logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
           name: "FEX Cross Swap",
         },
+        referral: {
+          feeAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
+          platformFeeBps: 25 // 25 bps = 0.25% fee
+        }
       });
     </script>
   </body>
