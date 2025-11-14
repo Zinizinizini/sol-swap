@@ -1,70 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FEX Cross Swap</title>
-  <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
-
-    #wrapper {
-      width: 100%;
-      max-width: 600px;
-      height: 600px;
-      margin: 40px auto;
-      position: relative;
-      overflow: hidden;
-      border: 2px solid #444;
-      border-radius: 12px;
-      background: #111;
-      box-sizing: border-box;
-    }
-
-    #target-container {
-      width: 100%;
-      height: 100%;
-    }
-
-    h1 {
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-  </style>
-  <script src="https://www.jup.ag/static/js/jupiter-plugin.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jupiter API Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  body { background-color: #0f0f0f; color: #fff; }
+  .card { background-color: #1a1a1a; border-radius: 12px; padding: 20px; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+  .btn { background-color: #4f46e5; color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+  .btn:hover { background-color: #6366f1; }
+  input { background-color: #111; color: #fff; border: 1px solid #444; border-radius: 8px; padding: 8px; width: 100%; }
+</style>
 </head>
-<body>
-  <h1>FEX Cross Swap</h1>
-  <div id="wrapper">
-    <div id="target-container"></div>
+<body class="p-6 font-sans">
+
+<h1 class="text-3xl font-bold mb-6 text-center">Jupiter API Dashboard</h1>
+
+<!-- Plans -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  <div class="card">
+    <h2 class="text-xl font-semibold mb-2">Lite</h2>
+    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://lite-api.jup.ag" class="text-indigo-400 hover:underline">https://lite-api.jup.ag</a></p>
+    <p class="mb-1"><strong>Rate Limit:</strong> Fixed: 1 RPS</p>
+    <p class="mb-1"><strong>Price:</strong> Free</p>
+    <p class="text-green-400 font-semibold">Active</p>
   </div>
 
-  <script>
-    window.addEventListener("load", function() {
-      console.log("window.Jupiter:", window.Jupiter);
-      if (window.Jupiter && typeof window.Jupiter.init === "function") {
-        window.Jupiter.init({
-          displayMode: "integrated",           // embedded mode
-          integratedTargetId: "target-container",
-          branding: {
-            logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
-            name: "FEX Cross Swap"
-          },
-          formProps: {
-            referralAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
-            referralFee: 25
-          }
-        });
-      } else {
-        console.error("Jupiter plugin failed to load or init() missing.");
-      }
+  <div class="card">
+    <h2 class="text-xl font-semibold mb-2">Ultra (Beta)</h2>
+    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://api.jup.ag/ultra" class="text-indigo-400 hover:underline">https://api.jup.ag/ultra</a></p>
+    <p class="mb-1"><strong>Rate Limit:</strong> Dynamic: Scales with executed swap volume</p>
+    <p class="mb-1"><strong>Price:</strong> Free</p>
+    <p class="text-green-400 font-semibold">Active</p>
+  </div>
+
+  <div class="card">
+    <h2 class="text-xl font-semibold mb-2">Pro</h2>
+    <p class="mb-1"><strong>Endpoint:</strong> <a href="https://api.jup.ag" class="text-indigo-400 hover:underline">https://api.jup.ag</a></p>
+    <p class="mb-1"><strong>Rate Limit:</strong> Tiered: Starting at 10 RPS</p>
+    <p class="mb-1"><strong>Price:</strong> Starting at $200/mo</p>
+    <p class="text-red-500 font-semibold">Not Active</p>
+    <button class="btn mt-2">Subscribe Now</button>
+  </div>
+</div>
+
+<!-- API Key Management -->
+<div class="card max-w-xl mx-auto">
+  <h2 class="text-xl font-semibold mb-4">API Keys</h2>
+  <p class="mb-2">Securely manage and generate API keys to power your integrations.</p>
+  <div class="mb-4">
+    <label class="block mb-1">Your Jupiter API Key:</label>
+    <input type="text" id="apiKey" value="5673cae8-f314-49a1-84f9-fbcaadc37079" readonly>
+  </div>
+  <button class="btn" onclick="copyKey()">Copy Key</button>
+</div>
+
+<script>
+  function copyKey() {
+    const keyInput = document.getElementById('apiKey');
+    keyInput.select();
+    keyInput.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(keyInput.value).then(() => {
+      alert('API Key copied to clipboard!');
     });
-  </script>
+  }
+</script>
+
 </body>
 </html>
