@@ -1,38 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF‑8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jupiter Swap Test</title>
-  <style>
-    body { background: #111; color: #fff; font-family: sans‑serif; text-align: center; padding: 20px; }
-    #swapContainer { width: 100%; max‑width: 500px; height: 500px; margin: 0 auto; border: 1px solid #444; }
-  </style>
-  <script src="https://www.jup.ag/static/js/jupiter-plugin.js"></script>
-</head>
-<body>
-  <h1>Jupiter Swap Test</h1>
-  <div id="swapContainer"></div>
+<style>
+  #wrapper { width: 100%; max-width: 600px; height: 600px; margin: 40px auto; border: 1px solid red; }
+  #target-container { width:100%; height:100%; background: #111; }
+</style>
 
-  <script>
-    window.addEventListener("load", function(){
-      if (window.Jupiter) {
-        window.Jupiter.init({
-          displayMode: "integrated",
-          integratedTargetId: "swapContainer",
-          branding: {
-            logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
-            name: "FEX Cross Swap"
-          },
-          referral: {
-            feeAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
-            platformFeeBps: 25
-          }
-        });
-      } else {
-        console.error("Jupiter plugin failed to load.");
-      }
-    });
-  </script>
-</body>
-</html>
+<script>
+  window.addEventListener("load", () => {
+    console.log("Init Jupiter plugin…", window.Jupiter);
+    if (window.Jupiter) {
+      window.Jupiter.init({
+        displayMode: "widget",  // try widget mode
+        integratedTargetId: "target-container",
+        branding: {
+          logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
+          name: "FEX Cross Swap",
+        },
+        // for testing leave out referral:
+        // referral: {
+        //   feeAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
+        //   platformFeeBps: 25
+        // }
+      });
+    } else {
+      console.error("Jupiter plugin failed to load.");
+    }
+  });
+</script>
