@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jupiter API Dashboard</title>
+<title>FEX Cross Swap Dashboard</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://www.jup.ag/static/js/jupiter-plugin.js"></script>
 <style>
   body { background-color: #0f0f0f; color: #fff; }
   .card { background-color: #1a1a1a; border-radius: 12px; padding: 20px; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
   .btn { background-color: #4f46e5; color: #fff; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
   .btn:hover { background-color: #6366f1; }
   input { background-color: #111; color: #fff; border: 1px solid #444; border-radius: 8px; padding: 8px; width: 100%; }
+  #swap-container { width: 100%; height: 600px; margin-top: 20px; border: 2px solid #444; border-radius: 12px; background-color: #111; }
 </style>
 </head>
 <body class="p-6 font-sans">
 
-<h1 class="text-3xl font-bold mb-6 text-center">Jupiter API Dashboard</h1>
+<h1 class="text-3xl font-bold mb-6 text-center">FEX Cross Swap Dashboard</h1>
 
 <!-- Plans -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -46,7 +48,7 @@
 </div>
 
 <!-- API Key Management -->
-<div class="card max-w-xl mx-auto">
+<div class="card max-w-xl mx-auto mb-8">
   <h2 class="text-xl font-semibold mb-4">API Keys</h2>
   <p class="mb-2">Securely manage and generate API keys to power your integrations.</p>
   <div class="mb-4">
@@ -56,7 +58,14 @@
   <button class="btn" onclick="copyKey()">Copy Key</button>
 </div>
 
+<!-- Jupiter Swap Widget -->
+<div class="card max-w-3xl mx-auto">
+  <h2 class="text-xl font-semibold mb-4">Swap Tokens</h2>
+  <div id="swap-container"></div>
+</div>
+
 <script>
+  // Copy API key function
   function copyKey() {
     const keyInput = document.getElementById('apiKey');
     keyInput.select();
@@ -65,6 +74,26 @@
       alert('API Key copied to clipboard!');
     });
   }
+
+  // Initialize Jupiter swap widget
+  window.addEventListener("load", function() {
+    if (window.Jupiter && typeof window.Jupiter.init === "function") {
+      window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "swap-container",
+        branding: {
+          logoUri: "https://i.postimg.cc/05B8XSgR/2dds.png",
+          name: "FEX Cross Swap"
+        },
+        formProps: {
+          referralAccount: "2oD8fZ3N36A271fNCwbNiSzGnHFqcWtSLMrTWdDU7osi",
+          referralFee: 25
+        }
+      });
+    } else {
+      console.error("Jupiter plugin failed to load or init() missing.");
+    }
+  });
 </script>
 
 </body>
